@@ -1,0 +1,31 @@
+-- credits to yellow (UwU)
+
+local font_manager = {}
+local fonts = "fonts/"    
+
+function font_manager:register(name, weight, style, asset)
+    if not isfile(fonts .. asset.id) then writefile(fonts .. asset.id, asset.font) end
+    if isfile(fonts .. name .. ".font") then delfile(fonts .. name .. ".font") end
+    local data = {
+        name = name,
+        faces = {
+            {
+                name = "Regular",
+                weight = weight,
+                style = style,
+                assetid = getcustomasset(fonts .. asset.id),
+            },
+        },
+    }
+    writefile(fonts .. name .. ".font", game.HttpService:JSONEncode(data))
+    return getcustomasset(fonts .. name .. ".font");
+end
+    
+function font_manager:create(name, type, asset)
+    return Font.new(font_manager:register(name, 100, type, {
+        id = (name .. ".ttf"),
+        font = crypt.base64.decode(asset)
+    }))
+end
+
+return font_manager.create
