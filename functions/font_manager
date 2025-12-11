@@ -3,7 +3,7 @@
 local font_manager = {}
 local fonts = "fonts/"    
 
-function font_manager:register(name, weight, style, asset)
+function font_manager.register(name, weight, style, asset)
     if not isfile(fonts .. asset.id) then writefile(fonts .. asset.id, asset.font) end
     if isfile(fonts .. name .. ".font") then delfile(fonts .. name .. ".font") end
     local data = {
@@ -21,7 +21,7 @@ function font_manager:register(name, weight, style, asset)
     return getcustomasset(fonts .. name .. ".font");
 end
     
-function font_manager:create(name, type, asset)
+function font_manager.create(name, type, asset)
     return Font.new(font_manager:register(name, 100, type, {
         id = (name .. ".ttf"),
         font = crypt.base64.decode(asset)
