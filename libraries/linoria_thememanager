@@ -4,6 +4,7 @@ end
 
 local httpService = RefService('HttpService')
 local ThemeManager = {} do
+	ThemeManager.Folder = 'moonlight'
 	ThemeManager.Library = nil
 	ThemeManager.BuiltInThemes = {
 		['Moonlight'] 		= { 1, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"0b0c15","AccentColor":"78779d","BackgroundColor":"07080e","OutlineColor":"323232"}') },
