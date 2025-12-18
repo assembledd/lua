@@ -1,0 +1,70 @@
+-- made by assembledd
+
+if not gethui then
+	gethui = function()
+		return game:GetService("Players").LocalPlayer.PlayerGui
+	end
+end
+
+local tweenservice = game:GetService("TweenService")
+return function(name: string, delay: number, color: Color3)
+	if not delay then delay = 1 end
+	local defaultsize = UDim2.new(1,0,0.2,0)
+
+	name = name:upper()
+
+	local gui = Instance.new("ScreenGui", gethui())
+	gui.IgnoreGuiInset = true
+	gui.ResetOnSpawn = false
+	gui.Name = tostring(math.random())
+
+	local blur = Instance.new("BlurEffect", game:GetService("Lighting"))
+	blur.Size = 0
+	blur.Name = tostring(math.random())
+	blur.Enabled = true
+
+	local text = Instance.new("TextLabel", gui)
+	text.Text = name:split("")[1]
+	text.Position = UDim2.new(0.5,0,0.5,0)
+	text.AnchorPoint = Vector2.new(0.5,0.5)
+	text.TextStrokeTransparency = 0.6
+	text.TextScaled = true
+	text.RichText = true
+	text.Font = Enum.Font.Sarpanch
+	text.Size = defaultsize + defaultsize + defaultsize
+	text.BackgroundTransparency = 1
+	text.TextColor3 = color or Color3.fromRGB(255,255,255)
+
+	task.wait()
+
+	tweenservice:Create(blur, TweenInfo.new(0.5), {Size = 15}):Play()
+	tweenservice:Create(text, TweenInfo.new(1.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = defaultsize}):Play()
+	task.wait(1.5)
+	for i = 2,#name do
+		text.Text = text.Text .. name:split("")[i]
+		local length = #name-1
+		task.wait(delay / length)
+	end
+	task.wait(1.5)
+
+	local instances = {
+		text,
+		gui,
+		blur
+	}
+
+	for i,v in instances do
+		if v.ClassName == "TextLabel" then
+			tweenservice:Create(v, TweenInfo.new(1.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextTransparency = 1}):Play()
+		elseif v.ClassName == "BlurEffect" then
+			tweenservice:Create(v, TweenInfo.new(1.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = 0}):Play()
+		end
+	end
+
+	task.wait(1.5)
+
+	for i,v in instances do
+		v:Destroy()
+	end
+	instances = nil
+end
