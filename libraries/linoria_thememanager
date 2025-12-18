@@ -10,6 +10,7 @@ local ThemeManager = {} do
 	ThemeManager.BuiltInThemes = {
 		['Moonlight'] 		= { 1, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"0b0c15","AccentColor":"78779d","BackgroundColor":"07080e","OutlineColor":"323232"}') },
 		['Fatality']		= { 2, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"1e1842","AccentColor":"c50754","BackgroundColor":"191335","OutlineColor":"3c355d"}') },
+		['White'] 		    = { 3, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"bababa","AccentColor":"78779d","BackgroundColor":"969696","OutlineColor":"323232"}') },
 	}
 
 	function ThemeManager:ApplyTheme(theme)
