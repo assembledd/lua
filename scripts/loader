@@ -1,1 +1,15 @@
+local creatorid = game.CreatorId
+local localplayer = cloneref(game:GetService("Players").LocalPlayer)
+local url = "https://raw.githubusercontent.com/assembledd/lua/refs/heads/main/scripts/"
+local games = {
+    [65587627] = "baseplate",
+}
 
+local idx = games[creatorid]
+if idx then
+    if not pcall(function() loadstring(request({Url=url..idx,Method="GET"}).Body)() end) then
+        localplayer:Kick("script errored")
+    end
+else
+    localplayer:Kick("this game is not supported")
+end
