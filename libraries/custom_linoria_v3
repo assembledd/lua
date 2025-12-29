@@ -145,7 +145,7 @@ function Library:add_widget(name, dim, centered)
     name = name or "unnamed widget"
 
     local WidgetOuter = Library:Create('Frame', {
-        AnchorPoint = centered and Vector2.new(0.5, 0.5) or Vector2.new(0, 0.5);
+        AnchorPoint = centered and Vector2.new(0.5, 0) or Vector2.new(0,0);
         BorderColor3 = Color3.new(0, 0, 0);
         Position = dim or UDim2.new(0, 5, 0.1, 0);
         Size = UDim2.new(0, 210, 0, 20);
