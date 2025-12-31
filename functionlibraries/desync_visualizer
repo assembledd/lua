@@ -1,0 +1,52 @@
+local utility = {cache=Instance.new("Folder",workspace.Terrain),tick=tick(),config={color=Color3.new(1,1,1),transparency=0.8,material=Enum.Material.Neon}}
+local players = cloneref(game:GetService("Players"))
+local runservice = cloneref(game:GetService("RunService"))
+local localplayer = players.LocalPlayer
+
+function utility.visualize(tbl)
+    utility.tick = tick()
+    local character = localplayer.Character
+    if character then
+        for i,v in tbl do
+            if not utility.cache:FindFirstChild(i) then
+                local part = character[i]:Clone()
+                local mesh = part:FindFirstChildOfClass("SpecialMesh")
+                if mesh then
+                    part:Destroy()
+
+                    part = Instance.new("MeshPart")
+                    part.MeshId = "rbxasset://avatar/heads/head.mesh"
+                    part.Size = mesh.Scale / 1.25
+                end
+                part.Name = i
+                part.CanCollide = false
+                part.Anchored = true
+                part.Color = Color3.new(1,0,0)
+                part.Material = Enum.Material.ForceField
+                part.Parent = utility.cache
+                part:ClearAllChildren()
+            end
+            local object = utility.cache[i]
+            object.Color = utility.config.color
+            object.Transparency = utility.config.transparency
+            object.Material = utility.config.material
+            if (object.Position - v.Position).Magnitude >= 30 then
+                object.CFrame = v
+            else
+                object.CFrame = object.CFrame:Lerp(v, 0.1)
+            end
+        end
+    end
+end
+
+function utility.change(str, new)
+    utility.config[str] = new
+end
+
+runservice.Heartbeat:Connect(function()
+    if tick() - utility.tick > .1 then
+        utility.cache:ClearAllChildren()
+    end
+end)
+
+return utility
