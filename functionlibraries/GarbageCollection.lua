@@ -67,8 +67,8 @@ function Utility:GetTablesWithContent(Content: string): SharedTable | string
 end
 
 function Utility:GetFunctionHash(Function: any): string
-    local Hash = pcall(getfunctionhash, Function)
-    return Hash or 'Invalid Function.'
+    local State, Hash = pcall(getfunctionhash, Function)
+    return State and Hash or 'Invalid Function.'
 end
 
 function Utility:SetHeap(Names: SharedTable): any
