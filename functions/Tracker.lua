@@ -1,6 +1,6 @@
 local Env = getgenv and getgenv() or _G
-if Env.tracker then
+if Env.Tracker then
     pcall(function() game:GetService("Players").LocalPlayer:Kick("Already Injected.\nPlease Rejoin!") end)
     task.wait(9e9)
 end
-Env.tracker = 1
+Env.Tracker = 1
